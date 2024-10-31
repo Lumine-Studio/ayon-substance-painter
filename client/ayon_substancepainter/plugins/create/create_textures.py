@@ -27,7 +27,7 @@ class CreateTextures(Creator):
     product_type = "textureSet"
     icon = "picture-o"
 
-    default_variant = "Main"
+    default_variant = "main_lod100"
     settings_category = "substancepainter"
     channel_mapping = []
 
@@ -36,7 +36,6 @@ class CreateTextures(Creator):
         if settings:
             self.channel_mapping = settings["CreateTextures"].get(
                 "channel_mapping", [])
-
 
     def create(self, product_name, instance_data, pre_create_data):
         if not substance_painter.project.is_open():
@@ -239,7 +238,7 @@ class CreateTextures(Creator):
     def get_pre_create_attr_defs(self):
         # Use same attributes as for instance attributes
         attr_defs = []
-        if  substance_painter.application.version_info()[0] >= 10:
+        if substance_painter.application.version_info()[0] >= 10:
             attr_defs.append(
                 BoolDef("use_selection", label="Use selection",
                         tooltip="Select Layer Stack(s) for exporting")
