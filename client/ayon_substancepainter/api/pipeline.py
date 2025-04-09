@@ -301,7 +301,7 @@ def on_open():
             dialog = SimplePopup(parent=parent)
             dialog.setWindowTitle("Substance scene has outdated content")
             dialog.set_message("There are outdated containers in "
-                              "your Substance scene.")
+                               "your Substance scene.")
             dialog.on_clicked.connect(_on_show_inventory)
             dialog.show()
 
