@@ -84,17 +84,17 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
                 texture_set_name
             )
             # More than one texture set, include texture set name
-            suffix += f".{texture_set_name}"
+            suffix += f"_{texture_set_name}"
             if texture_set.is_layered_material() and stack_name:
                 # More than one stack, include stack name
-                suffix += f".{stack_name}"
+                suffix += f"_{stack_name}"
 
         if uv_tile_name:
             suffix += f".{uv_tile_name}"
 
         # Always include the map identifier
         map_identifier = strip_template(template)
-        suffix += f".{map_identifier}"
+        suffix += f"_{map_identifier}"
 
         task_name = task_type = None
         if task_entity:
@@ -143,7 +143,7 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
         representation["tags"] = ["review"]
         representation["stagingDir"] = staging_dir
         # Clone the instance
-        product_type = "image"
+        product_type = "texture"
         image_instance = context.create_instance(image_product_name)
         image_instance[:] = instance[:]
         image_instance.data.update(copy.deepcopy(dict(instance.data)))
