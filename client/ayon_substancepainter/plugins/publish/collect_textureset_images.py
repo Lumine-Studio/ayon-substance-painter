@@ -74,7 +74,6 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
         ext = os.path.splitext(first_filepath)[1]
         assert ext.lstrip("."), f"No extension: {ext}"
 
-
         # all_texture_sets = substance_painter.textureset.all_texture_sets()
         # Define the suffix we want to give this particular texture
         # set and set up a remapped product naming for it.
@@ -84,17 +83,17 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
                 texture_set_name
             )
             # More than one texture set, include texture set name
-            suffix += f".{texture_set_name}"
+            suffix += f"_{texture_set_name}"
             if texture_set.is_layered_material() and stack_name:
                 # More than one stack, include stack name
-                suffix += f".{stack_name}"
+                suffix += f"_{stack_name}"
 
         if uv_tile_name:
             suffix += f".{uv_tile_name}"
 
         # Always include the map identifier
         map_identifier = strip_template(template)
-        suffix += f".{map_identifier}"
+        suffix += f"_{map_identifier}"
 
         task_name = task_type = None
         if task_entity:
@@ -143,7 +142,7 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
         representation["tags"] = ["review"]
         representation["stagingDir"] = staging_dir
         # Clone the instance
-        product_type = "image"
+        product_type = "texture"
         image_instance = context.create_instance(image_product_name)
         image_instance[:] = instance[:]
         image_instance.data.update(copy.deepcopy(dict(instance.data)))
@@ -248,10 +247,11 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
                     parameters.pop(key)
 
         channel_layer = creator_attrs.get("exportChannel", [])
-        maps = get_filtered_export_preset(
-            preset_url, channel_layer, is_single_output
-        )
-        config.update(maps)
+        if channel_layer:
+            maps = get_filtered_export_preset(
+                preset_url, channel_layer, is_single_output
+            )
+            config.update(maps)
         return config
 
 
@@ -300,7 +300,7 @@ class CollectCustomExportPresetUrl(pyblish.api.InstancePlugin):
     def process(self, instance):
         # Update export config
         if not instance.data["creator_attributes"].get(
-            "flattenTextureSets", False):
+                "flattenTextureSets", False):
             return
 
         config = instance.data["exportConfig"]
