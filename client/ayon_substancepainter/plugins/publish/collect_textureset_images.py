@@ -74,7 +74,6 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
         ext = os.path.splitext(first_filepath)[1]
         assert ext.lstrip("."), f"No extension: {ext}"
 
-
         # all_texture_sets = substance_painter.textureset.all_texture_sets()
         # Define the suffix we want to give this particular texture
         # set and set up a remapped product naming for it.
@@ -248,10 +247,11 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
                     parameters.pop(key)
 
         channel_layer = creator_attrs.get("exportChannel", [])
-        maps = get_filtered_export_preset(
-            preset_url, channel_layer, is_single_output
-        )
-        config.update(maps)
+        if channel_layer:
+            maps = get_filtered_export_preset(
+                preset_url, channel_layer, is_single_output
+            )
+            config.update(maps)
         return config
 
 
@@ -300,7 +300,7 @@ class CollectCustomExportPresetUrl(pyblish.api.InstancePlugin):
     def process(self, instance):
         # Update export config
         if not instance.data["creator_attributes"].get(
-            "flattenTextureSets", False):
+                "flattenTextureSets", False):
             return
 
         config = instance.data["exportConfig"]
