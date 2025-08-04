@@ -83,10 +83,11 @@ class CollectTextureSet(pyblish.api.InstancePlugin):
                 texture_set_name
             )
             # More than one texture set, include texture set name
-            suffix += f"_{texture_set_name}"
-            if texture_set.is_layered_material() and stack_name:
-                # More than one stack, include stack name
-                suffix += f"_{stack_name}"
+
+            # suffix += f"_{texture_set_name}"
+            # if texture_set.is_layered_material() and stack_name:
+            #     # More than one stack, include stack name
+            #     suffix += f"_{stack_name}"
 
         if uv_tile_name:
             suffix += f".{uv_tile_name}"
