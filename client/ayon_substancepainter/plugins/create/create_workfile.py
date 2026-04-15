@@ -19,7 +19,7 @@ class CreateWorkfile(AutoCreator):
     product_type = product_base_type
     icon = "document"
 
-    default_variant = "Main"
+    default_variant = "main"
     settings_category = "substancepainter"
     active_on_create = True
 

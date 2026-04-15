@@ -28,7 +28,7 @@ class CreateTextures(Creator):
     product_type = product_base_type
     icon = "picture-o"
 
-    default_variant = "Main"
+    default_variant = "main_lod100"
     settings_category = "substancepainter"
     channel_mapping = []
 
