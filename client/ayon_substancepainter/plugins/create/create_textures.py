@@ -27,7 +27,7 @@ class CreateTextures(Creator):
     product_type = "textureSet"
     icon = "picture-o"
 
-    default_variant = "Main"
+    default_variant = "main_lod100"
     settings_category = "substancepainter"
     channel_mapping = []
 
@@ -36,7 +36,6 @@ class CreateTextures(Creator):
         if settings:
             self.channel_mapping = settings["CreateTextures"].get(
                 "channel_mapping", [])
-
 
     def create(self, product_name, instance_data, pre_create_data):
         if not substance_painter.project.is_open():
